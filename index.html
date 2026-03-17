@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { background: transparent; color: white; font-family: sans-serif; text-align: center; }
+        .score-box { font-size: 48px; text-shadow: 2px 2px 4px #000; }
+    </style>
+</head>
+<body>
+    <div class="score-box">
+        <span id="scoreA">0</span> - <span id="scoreB">0</span>
+    </div>
+
+    <script type="module">
+      // I will explain how to get these config details in Step 3
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+      import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js";
+
+      const firebaseConfig = { /* YOUR CONFIG HERE */ };
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+
+      // Listen for changes
+      onValue(ref(db, 'scores/'), (snapshot) => {
+          const data = snapshot.val();
+          document.getElementById('scoreA').innerText = data.scoreA;
+          document.getElementById('scoreB').innerText = data.scoreB;
+      });
+    </script>
+</body>
+</html>
